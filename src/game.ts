@@ -55,13 +55,17 @@ export class HangmanGame extends LitElement {
           count is ${this.count}
         </button>
       </div>
-      <hangman-input></hangman-input>
+      <hangman-input @value-changed="${this.valueChanged}"></hangman-input>
       <p class="read-the-docs">${this.docsHint}</p>
     `
   }
 
   private _onClick() {
     this.count++
+  }
+
+  valueChanged(e) {
+    console.log(e.detail)
   }
 
   static styles = css`
