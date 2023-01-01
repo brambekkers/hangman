@@ -1,43 +1,94 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators.js'
 
 @customElement('hangman-form')
 export class HangmanForm extends LitElement {
-  @property()
-  inputLetter: string = ''
-
+  connectedCallback() {
+    super.connectedCallback()
+    window.addEventListener('keydown', this.onEnter.bind(this))
+  }
+  disconnectedCallback() {
+    window.removeEventListener('keydown', this.onEnter.bind(this))
+    super.disconnectedCallback()
+  }
   render() {
     return html` <form>
-      <p id="input-hint">Enter a letter:</p>
+      <p id="input-hint">Enter a letter</p>
       <div>
         <hangman-input
-          @letter-changed="${({ detail }: { detail: string }) => (this.inputLetter = detail)}"
+          id="input"
+          @input=${this.validate}
         ></hangman-input>
-        <hangman-button @click="${this._handleSubmit}">Guess</hangman-button>
+        <hangman-button @click="${this.submit}">Guess</hangman-button>
       </div>
     </form>`
   }
 
-  private _handleSubmit() {
-    if (!this.inputLetter) return
+  private validate(event: InputEvent) {
+    const form = this.shadowRoot?.querySelector('form')
+    const input = form?.querySelector('#input')?.shadowRoot?.firstElementChild as HTMLInputElement
+    if (!input || !event.data) return
+
+    // Check if input is a letter
+    if (!this.isLetter(event.data)) {
+      input.value = ''
+      return
+    }
+
+    // Check if input is a single letter
+    if (input?.value?.length > 1) {
+      input.value = event.data
+    }
+  }
+
+  private isLetter(str: string) {
+    return Boolean(str.match(/^[A-Za-z]*$/))
+  }
+
+  onEnter(event: KeyboardEvent) {
+    if (event.key !== 'Enter') return
+    this.submit()
+  }
+
+  private submit() {
+    const form = this.shadowRoot?.querySelector('form')
+    const input = form?.querySelector('#input')?.shadowRoot?.firstElementChild as HTMLInputElement
+    if (!input.value) return this.shakeInput()
     this.dispatchEvent(
       new CustomEvent('guess', {
-        detail: this.inputLetter
+        detail: input.value
       })
     )
+    this.clearInput()
+  }
+
+  shakeInput() {
+    const form = this.shadowRoot?.querySelector('form')
+    const input = form?.querySelector('#input')?.shadowRoot?.firstElementChild as HTMLInputElement
+
+    input.classList.add('shake')
+    setTimeout(() => input.classList.remove('shake'), 500)
+  }
+
+  clearInput() {
+    const form = this.shadowRoot?.querySelector('form')
+    const input = form?.querySelector('#input')?.shadowRoot?.firstElementChild as HTMLInputElement
+
+    input.value = ''
+    input.focus()
   }
 
   static styles = css`
     form {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
     }
     #input-hint {
       color: #bc2f38;
       font-weight: 800;
-      font-size: 1.4rem;
-      margin-bottom: 0;
+      font-size: 1.7rem;
+      margin-bottom: 0.2rem;
     }
   `
 }

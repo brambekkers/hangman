@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators.js'
 
 @customElement('hangman-input')
 export class HangmanInput extends LitElement {
@@ -7,34 +7,7 @@ export class HangmanInput extends LitElement {
     return html` <input
       type="text"
       required
-      @input=${this._changeHandler}
     />`
-  }
-
-  private _changeHandler(event: InputEvent) {
-    const target = event.target as HTMLInputElement
-    if (!target || !event.data) return
-
-    // Check if input is a letter
-    if (!this.isLetter(event.data)) {
-      target.value = ''
-      return
-    }
-
-    // Check if input is a single letter
-    if (target.value.length > 1) {
-      target.value = event.data
-    }
-
-    this.dispatchEvent(
-      new CustomEvent('letter-changed', {
-        detail: event.data
-      })
-    )
-  }
-
-  private isLetter(str: string) {
-    return Boolean(str.match(/^[A-Za-z]*$/))
   }
 
   static styles = css`
@@ -57,6 +30,50 @@ export class HangmanInput extends LitElement {
     input:focus,
     input:focus-visible {
       outline: none;
+    }
+
+    .shake {
+      /* Start the shake animation and make the animation last for 0.5 seconds */
+      animation: shake 0.5s;
+      border-color: #bc2f38 !important;
+      /* When the animation is finished, start again */
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(0.5rem, 0.5rem) rotate(0deg);
+      }
+      10% {
+        transform: translate(-0.5rem, -1rem) rotate(-1deg);
+      }
+      20% {
+        transform: translate(1.5rem, 0px) rotate(1deg);
+      }
+      30% {
+        transform: translate(3px, 1rem) rotate(0deg);
+      }
+      40% {
+        transform: translate(0.5rem, -0.5rem) rotate(1deg);
+      }
+      50% {
+        transform: translate(-0.5rem, 1rem) rotate(-1deg);
+      }
+      60% {
+        transform: translate(1.5rem, 0.5rem) rotate(0deg);
+      }
+      70% {
+        transform: translate(3px, 0.5rem) rotate(-1deg);
+      }
+      80% {
+        transform: translate(-0.5rem, -0.5rem) rotate(1deg);
+      }
+      90% {
+        transform: translate(0.5rem, 1rem) rotate(0deg);
+      }
+      100% {
+        transform: translate(0.5rem, -1rem) rotate(-1deg);
+      }
     }
   `
 }
