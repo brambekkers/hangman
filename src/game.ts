@@ -9,7 +9,6 @@ export class HangmanGame extends LitElement {
 
   render() {
     return html`
-      <p>${this.guessedLetters}</p>
       <hangman-word
         word="${this.word}"
         .letters=${this.guessedLetters}
@@ -29,6 +28,11 @@ export class HangmanGame extends LitElement {
       margin: 0 auto;
       padding: 2rem;
       text-align: center;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   `
 }

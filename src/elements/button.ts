@@ -11,27 +11,26 @@ export class HangmanButton extends LitElement {
 
   static styles = css`
     button {
-      border-radius: 8px;
-      border: 1px solid transparent;
-      padding: 0.6em 1.2em;
-      font-size: 1em;
+      border: #414141 solid 4px;
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      font-size: 2rem;
+      padding: 1.7rem 2rem;
+      translate: 0 -5px;
+      color: inherit;
       font-weight: 500;
       font-family: inherit;
-      background-color: #1a1a1a;
+      background-color: transparent;
       cursor: pointer;
-      transition: border-color 0.25s;
+      font-weight: 900;
+      transition: all 0.25s;
     }
     button:hover {
-      border-color: #646cff;
+      scale: 1.1;
+      rotate: 2deg;
     }
     button:focus,
     button:focus-visible {
-      outline: 4px auto -webkit-focus-ring-color;
-    }
-    @media (prefers-color-scheme: light) {
-      button {
-        background-color: #f9f9f9;
-      }
+      outline: none;
     }
   `
 }
