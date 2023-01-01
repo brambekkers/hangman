@@ -17,8 +17,11 @@ export class HangmanGame extends LitElement {
 		return html`
 			<hangman-figure misses=${this.misses}></hangman-figure>
 			<hangman-word word="${this.word}" .letters=${this.letters}></hangman-word>
-			<hangman-form @guess="${this.onGuess}"></hangman-form>
-		`
+			${this.misses < 10
+				? html`<hangman-form @guess="${this.onGuess}"></hangman-form>`
+				: html`<h1>Game Over!</h1>`
+			}
+		`;
 	}
 
 	onGuess(event: CustomEvent) {
