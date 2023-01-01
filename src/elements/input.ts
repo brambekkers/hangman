@@ -4,12 +4,11 @@ import { customElement, property } from 'lit/decorators.js'
 @customElement('hangman-input')
 export class HangmanInput extends LitElement {
   @property()
-  inputLetter: string = 'a'
-
   render() {
     return html` <input
+      id="letter_input"
       type="text"
-      .value=${this.inputLetter}
+      required
       @input=${this._changeHandler}
     />`
   }
@@ -21,7 +20,6 @@ export class HangmanInput extends LitElement {
     // Check if input is a letter
     if (!this.isLetter(event.data)) {
       target.value = ''
-      this.inputLetter = ''
       return
     }
 
@@ -30,11 +28,8 @@ export class HangmanInput extends LitElement {
       target.value = event.data
     }
 
-    // Update inputLetter
-    this.inputLetter = event.data
-
     this.dispatchEvent(
-      new CustomEvent('value-changed', {
+      new CustomEvent('letter-changed', {
         detail: event.data
       })
     )

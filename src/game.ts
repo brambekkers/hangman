@@ -10,14 +10,11 @@ export class HangmanGame extends LitElement {
   render() {
     return html`
       <h2>${this.word}</h2>
-      <hangman-input @value-changed="${this.valueChanged}"></hangman-input>
-      <hangman-button @click=${() => alert('click')}>Guess</hangman-button>
+      <hangman-form @letter-changed="${this.valueChanged}" />
     `
   }
 
-  valueChanged(e: CustomEvent) {
-    console.log(randomWord())
-
+  private valueChanged(e: CustomEvent) {
     console.log(e.detail)
   }
 
