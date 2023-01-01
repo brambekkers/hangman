@@ -1,6 +1,7 @@
-export * from './button';
-export * from "./figure";
-export * from './form';
-export * from './input';
-export * from "./word";
-
+export * from './button'
+export * from './figure'
+export * from './form'
+export * from './input'
+export * from './word'
+export * from './letters'
+export * from './end-message'

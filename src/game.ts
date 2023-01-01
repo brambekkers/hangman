@@ -6,29 +6,42 @@ import { randomWord } from './utilities/words'
 export class HangmanGame extends LitElement {
   @property() word: string = randomWord()
   @property() guessedLetters: string[] = []
-  @property() misses: number = 0;
+  @property() misses: number = 0
+  @property() hasWon: boolean = false
 
   render() {
     return html`
-    <hangman-figure misses=${this.misses}></hangman-figure>
+      <hangman-letters .letters=${this.guessedLetters}></hangman-letters>
+      <hangman-figure misses=${this.misses}></hangman-figure>
       <hangman-word
         word="${this.word}"
         .letters=${this.guessedLetters}
       ></hangman-word>
-      ${this.misses < 10
-        ? html`<hangman-form @guess="${this.onGuess}"></hangman-form>`
-        : html`<h1>Game Over!</h1>`
-      }
+      ${this.getBottemElement()}
     `
   }
 
-  private onGuess(event: CustomEvent) {
-    this.guessedLetters.push(event.detail)
-    this.guessedLetters = [...new Set(this.guessedLetters)]
-    
-    if (!this.word.includes(event.detail)) {
-      this.misses++;
+  getBottemElement() {
+    if (this.misses >= 10) {
+      return html`<hangman-end-message>Game Over!</hangman-end-message>`
+    } else if (this.hasWon) {
+      return html`<hangman-end-message>You won!</hangman-end-message>`
     }
+    return html`<hangman-form @guess="${this.onGuess}"></hangman-form>`
+  }
+
+  private onGuess(event: CustomEvent) {
+    if (this.guessedLetters.includes(event.detail)) return
+    this.guessedLetters = [...this.guessedLetters, event.detail]
+
+    if (!this.word.includes(event.detail)) {
+      this.misses++
+      return
+    }
+
+    // Check if word is complete
+    const isComplete = this.word?.split('').every((letter) => this.guessedLetters.includes(letter))
+    if (isComplete) this.hasWon = true
   }
 
   static styles = css`
