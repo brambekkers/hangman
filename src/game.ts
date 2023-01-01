@@ -1,25 +1,31 @@
-
-import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
-import { randomWord } from './utilities/words'
-
+import { LitElement, css, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { randomWord } from "./utilities/words";
 
 @customElement("hangman-game")
 export class HangmanGame extends LitElement {
+	@property()
+	word: string = randomWord();
 
-  @property()
-  word: string = randomWord()
+	@property()
+	letters: string[] = [];
 
-  render() {
-    return html`
-      <hangman-word word="${this.word}" .letters=${["e", "o"]}></hangman-word>
-      <hangman-form @guess="${this.valueChanged}" />
-    `
-  }
+	@property()
+	misses: number = 0;
 
-  private valueChanged(e: CustomEvent) {
-    console.log(e.detail)
-  }
+	render() {
+		return html`
+			<hangman-figure misses=${this.misses}></hangman-figure>
+			<hangman-word word="${this.word}" .letters=${this.letters}></hangman-word>
+			<hangman-form @guess="${this.onGuess}"></hangman-form>
+		`
+	}
+
+	onGuess(event: CustomEvent) {
+		if (!this.word.includes(event.detail)) {
+			this.misses++;
+		}
+	}
 
 
 	static styles = css`
