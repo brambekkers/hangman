@@ -32,8 +32,6 @@ export class HangmanForm extends LitElement {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-
-      margin-top: 4rem;
     }
     #input-hint {
       color: #bc2f38;

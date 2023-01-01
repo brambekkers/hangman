@@ -24,6 +24,7 @@ export class HangmanWord extends LitElement {
       font-size: 4rem;
       line-height: 2rem;
       gap: 2rem;
+      margin: 4rem 0;
     }
     .letter {
       text-transform: lowercase;
