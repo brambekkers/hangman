@@ -10,20 +10,23 @@ export class HangmanGame extends LitElement {
 
   render() {
     return html`
-	  <hangman-figure misses=${this.misses}></hangman-figure>
+    <hangman-figure misses=${this.misses}></hangman-figure>
       <hangman-word
         word="${this.word}"
         .letters=${this.guessedLetters}
       ></hangman-word>
-      <hangman-form @guess="${this.valueChanged}"></hangman-form>
+      ${this.misses < 10
+        ? html`<hangman-form @guess="${this.onGuess}"></hangman-form>`
+        : html`<h1>Game Over!</h1>`
+      }
     `
   }
 
-  private valueChanged(e: CustomEvent) {
-    this.guessedLetters.push(e.detail)
+  private onGuess(event: CustomEvent) {
+    this.guessedLetters.push(event.detail)
     this.guessedLetters = [...new Set(this.guessedLetters)]
     
-    if (!this.word.includes(e.detail)) {
+    if (!this.word.includes(event.detail)) {
       this.misses++;
     }
   }
