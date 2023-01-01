@@ -6,20 +6,26 @@ import { randomWord } from './utilities/words'
 export class HangmanGame extends LitElement {
   @property() word: string = randomWord()
   @property() guessedLetters: string[] = []
+  @property() misses: number = 0;
 
   render() {
     return html`
+	  <hangman-figure misses=${this.misses}></hangman-figure>
       <hangman-word
         word="${this.word}"
         .letters=${this.guessedLetters}
       ></hangman-word>
-      <hangman-form @guess="${this.valueChanged}" />
+      <hangman-form @guess="${this.valueChanged}"></hangman-form>
     `
   }
 
   private valueChanged(e: CustomEvent) {
     this.guessedLetters.push(e.detail)
     this.guessedLetters = [...new Set(this.guessedLetters)]
+    
+    if (!this.word.includes(e.detail)) {
+      this.misses++;
+    }
   }
 
   static styles = css`
