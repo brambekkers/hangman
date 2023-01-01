@@ -39,17 +39,24 @@ export class HangmanInput extends LitElement {
 
   static styles = css`
     input {
-      width: 50px;
-      height: 50px;
-      background-color: rgba(0, 0, 0, 0.1);
-      border: none;
+      width: 70px;
+      height: 70px;
+      border: #414141 solid 4px !important;
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+      padding: 1rem 0.5rem !important;
+      background-color: rgba(0, 0, 0, 0);
       line-height: 50px;
+      color: inherit;
       text-align: center;
-      font-size: 24px;
-      color: white;
+      font-size: 3rem;
       margin: 0 2px;
       font-family: inherit;
-      font-weight: 700;
+      margin-right: 1.5rem;
+    }
+
+    input:focus,
+    input:focus-visible {
+      outline: none;
     }
   `
 }
