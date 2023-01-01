@@ -55,6 +55,7 @@ export class HangmanGame extends LitElement {
           count is ${this.count}
         </button>
       </div>
+      <hangman-input></hangman-input>
       <p class="read-the-docs">${this.docsHint}</p>
     `
   }
@@ -137,6 +138,6 @@ export class HangmanGame extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'my-element': MyElement
+    'hangman-game': HangmanGame
   }
 }
