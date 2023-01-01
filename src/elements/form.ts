@@ -18,7 +18,7 @@ export class HangmanForm extends LitElement {
   private _handleSubmit() {
     if (!this.inputLetter) return
     this.dispatchEvent(
-      new CustomEvent('Guess', {
+      new CustomEvent('guess', {
         detail: this.inputLetter
       })
     )
