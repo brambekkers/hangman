@@ -64,7 +64,7 @@ export class HangmanGame extends LitElement {
     this.count++
   }
 
-  valueChanged(e) {
+  valueChanged(e: CustomEvent) {
     console.log(e.detail)
   }
 
