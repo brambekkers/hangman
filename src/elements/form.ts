@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js'
 
 @customElement('hangman-form')
 export class HangmanForm extends LitElement {
+  @property()
   inputLetter: string = ''
 
   render() {
@@ -13,11 +14,11 @@ export class HangmanForm extends LitElement {
       <hangman-button @click="${this._handleSubmit}">Guess</hangman-button>
     </form>`
   }
-  @property()
+
   private _handleSubmit() {
     if (!this.inputLetter) return
     this.dispatchEvent(
-      new CustomEvent('letter-changed', {
+      new CustomEvent('Guess', {
         detail: this.inputLetter
       })
     )

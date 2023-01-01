@@ -3,10 +3,8 @@ import { customElement, property } from 'lit/decorators.js'
 
 @customElement('hangman-input')
 export class HangmanInput extends LitElement {
-  @property()
   render() {
     return html` <input
-      id="letter_input"
       type="text"
       required
       @input=${this._changeHandler}
