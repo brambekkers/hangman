@@ -1,16 +1,23 @@
 import { LitElement, css, html } from 'lit'
-import { customElement } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
+import { randomWord } from './utilities/words'
 
 @customElement('hangman-game')
 export class HangmanGame extends LitElement {
+  @property()
+  word: string = randomWord()
+
   render() {
     return html`
+      <h2>${this.word}</h2>
       <hangman-input @value-changed="${this.valueChanged}"></hangman-input>
       <hangman-button @click=${() => alert('click')}>Guess</hangman-button>
     `
   }
 
   valueChanged(e: CustomEvent) {
+    console.log(randomWord())
+
     console.log(e.detail)
   }
 
