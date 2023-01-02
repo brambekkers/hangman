@@ -6,17 +6,22 @@ import { randomWord } from './utilities/words'
 export class HangmanGame extends LitElement {
   @property() word: string = randomWord()
   @property() guessedLetters: string[] = []
+  @property() lastGuessedLetter: string = ''
   @property() misses: number = 0
   @property() hasWon: boolean = false
 
   render() {
     return html`
-      <hangman-letters .letters=${this.guessedLetters}></hangman-letters>
+      <hangman-letters
+        id="guest-letters"
+        .letters=${this.guessedLetters}
+      ></hangman-letters>
       <hangman-figure misses=${this.misses}></hangman-figure>
       <hangman-word
         word="${this.word}"
         .letters=${this.guessedLetters}
       ></hangman-word>
+      <hangman-moving-letter letter=${this.lastGuessedLetter}></hangman-moving-letter>
       ${this.getBottemElement()}
     `
   }
@@ -27,10 +32,17 @@ export class HangmanGame extends LitElement {
     } else if (this.hasWon) {
       return html`<hangman-end-message>You won!</hangman-end-message>`
     }
-    return html`<hangman-form @guess="${this.onGuess}"></hangman-form>`
+    return html`<hangman-form
+      id="form"
+      @guess="${this.onGuess}"
+    ></hangman-form>`
   }
 
   private onGuess(event: CustomEvent) {
+    // Set last guessed letter for moving letter animation
+    this.lastGuessedLetter = event.detail
+
+    // Check if letter has already been guessed
     if (this.guessedLetters.includes(event.detail)) return
     this.guessedLetters = [...this.guessedLetters, event.detail]
 
