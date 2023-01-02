@@ -26,6 +26,19 @@ export class HangmanLetters extends LitElement {
     }
     .letter {
       text-transform: lowercase;
+      animation: smooth 5ms ease-in;
+      animation-delay: 0.5s;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    @-webkit-keyframes smooth {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
   `
 }

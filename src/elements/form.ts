@@ -19,7 +19,11 @@ export class HangmanForm extends LitElement {
           id="input"
           @input=${this.validate}
         ></hangman-input>
-        <hangman-button @click="${this.submit}">Guess</hangman-button>
+        <hangman-button
+          id="button"
+          @click="${this.submit}"
+          >Guess</hangman-button
+        >
       </div>
     </form>`
   }
