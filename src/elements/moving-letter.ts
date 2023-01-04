@@ -53,7 +53,7 @@ export class HangmanMovingLetter extends LitElement {
       button?.addEventListener('click', () => {
         this.moveToEndPosition()
       })
-    }, 500)
+    }, 1000)
   }
 
   toStartPosition() {
@@ -81,10 +81,10 @@ export class HangmanMovingLetter extends LitElement {
   }
 
   getEndPosition() {
-    const guestLetters = this.getRootNode()
+    const guessedLetters = this.getRootNode()
       .host.shadowRoot?.getElementById('guest-letters')
       .shadowRoot.querySelectorAll('.letter')
-    guestLetters.forEach((letter) => {
+    guessedLetters.forEach((letter: HTMLSpanElement) => {
       if (letter.innerText !== this.letter) return
       const rect = letter.getBoundingClientRect()
       this.endPosition.y = rect.top + rect.height / 2
